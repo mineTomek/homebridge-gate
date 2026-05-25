@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-gate",
+  "name": "@minetomek/homebridge-gate",
   "displayName": "Gate Automation",
   "type": "module",
   "version": "1.0.0",
