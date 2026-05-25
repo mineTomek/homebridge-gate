@@ -7,6 +7,10 @@ export class Mqtt {
   private client: mqtt.MqttClient;
   private log: Logging;
 
+  private onStateChange: ((state: number) => void) | null = null;
+  private onObstructionChange: ((obstruction: number) => void) | null = null;
+  private onAvailabilityChange: ((available: boolean) => void) | null = null;
+
   constructor(config: Config, log: Logging) {
     this.log = log;
     this.client = mqtt.connect({
@@ -26,6 +30,18 @@ export class Mqtt {
     this.client.on('message', this.handleMessage.bind(this));
   }
 
+  public setStateChangeHandler(callback: (state: number) => void) {
+    this.onStateChange = callback;
+  }
+
+  public setObstructionChangeHandler(callback: (obstruction: number) => void) {
+    this.onObstructionChange = callback;
+  }
+
+  public setAvailabilityChangeHandler(callback: (available: boolean) => void) {
+    this.onAvailabilityChange = callback;
+  }
+
   private subscribeTopics() {
     this.client.subscribe(MqttConfig.topic.sub.state, { qos: 1 });
     this.client.subscribe(MqttConfig.topic.sub.obstruction, { qos: 1 });
@@ -38,13 +54,29 @@ export class Mqtt {
     switch (topic) {
     case MqttConfig.topic.sub.state:
       this.log.info('Received state:', value);
+
+      if (this.onStateChange) {
+        this.onStateChange(value);
+      }
       break;
     case MqttConfig.topic.sub.obstruction:
       this.log.info('Received obstruction:', value);
+
+      if (this.onObstructionChange) {
+        this.onObstructionChange(value);
+      }
       break;
     case MqttConfig.topic.sub.availability:
+    {
       this.log.info('Received availability:', payload.toString());
+
+      const available = payload.toString() === Payload.availability.online;
+
+      if (this.onAvailabilityChange) {
+        this.onAvailabilityChange(available);
+      }
       break;
+    }
     default:
       this.log.warn('Received message on unknown topic:', topic);
     }

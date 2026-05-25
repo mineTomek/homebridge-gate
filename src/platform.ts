@@ -20,6 +20,7 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
   public readonly mqtt: Mqtt;
 
   private readonly accessories: PlatformAccessory[] = [];
+  private gateAccessory: GateAccessory | null = null;
 
   constructor(
     public readonly log: Logging,
@@ -29,14 +30,11 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
     this.Service = api.hap.Service;
     this.Characteristic = api.hap.Characteristic;
 
-    this.log.info('Initializing ', this.config.name);
-
     this.mqtt = new Mqtt(this.config as Config, this.log);
 
     this.api.on('didFinishLaunching', () => {
       this.registerFixedAccessories();
-
-      this.log.info('Config:', JSON.stringify(this.config));
+      this.setupMqttHandlers();
     });
   }
 
@@ -45,8 +43,28 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
   }
 
   private registerFixedAccessories() {
-    this.createOrReuseAccessory('Gate', 'gate', GateAccessory);
+    this.gateAccessory = this.createOrReuseAccessory('Gate', 'gate', GateAccessory) as GateAccessory;
     this.createOrReuseAccessory('Gate Button', 'gate-button', ButtonAccessory);
+  }
+
+  private setupMqttHandlers() {
+    if (this.gateAccessory) {
+      this.mqtt.setStateChangeHandler((state) => {
+        this.gateAccessory!.updateState(state);
+      });
+
+      this.mqtt.setObstructionChangeHandler((obstruction) => {
+        this.gateAccessory!.updateObstruction(obstruction);
+      });
+
+      this.mqtt.setAvailabilityChangeHandler((available) => {
+        if (!available) {
+          this.log.error('Gate ESP is offline');
+        } else {
+          this.log.info('Gate ESP is online');
+        }
+      });
+    }
   }
 
   private createOrReuseAccessory(
@@ -67,6 +85,6 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
       ]);
     }
 
-    new AccessoryClass(this, accessory);
+    return new AccessoryClass(this, accessory);
   }
 }
