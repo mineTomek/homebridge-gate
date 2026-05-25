@@ -4,14 +4,14 @@ export const MqttConfig = {
     newDevice: 'gate/device/new',
 
     sub: {
-      target: 'gate/target/set',
-      stop: 'gate/stop/trigger',
-    },
-
-    pub: {
       state: 'gate/current',
       obstruction: 'gate/obstruction',
       availability: 'gate/availability',
+    },
+
+    pub: {
+      target: 'gate/target/set',
+      stop: 'gate/stop/trigger',
     },
   } as const,
   payload: {
