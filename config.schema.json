@@ -1,0 +1,31 @@
+{
+    "pluginAlias": "GateAutomation",
+    "pluginType": "platform",
+    "singular": true,
+    "schema": {
+        "type": "object",
+        "properties": {
+            "mqttHost": {
+                "title": "MQTT Host",
+                "type": "string",
+                "default": "localhost"
+            },
+            "mqttPort": {
+                "title": "MQTT Port",
+                "type": "integer",
+                "default": 1883,
+                "minimum": 1,
+                "maximum": 65535
+            },
+            "mqttUsername": {
+                "title": "MQTT Username",
+                "type": "string"
+            },
+            "mqttPassword": {
+                "title": "MQTT Password",
+                "type": "string",
+                "format": "password"
+            }
+        }
+    }
+}
