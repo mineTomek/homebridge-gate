@@ -40,5 +40,5 @@ export const MqttConfig = {
   } as const,
 };
 
-export type MqttTopic = typeof MqttConfig.topic;
-export type MqttPayload = typeof MqttConfig.payload;
+export const Topic = MqttConfig.topic;
+export const Payload = MqttConfig.payload;
