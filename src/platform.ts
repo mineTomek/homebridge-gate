@@ -26,12 +26,12 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
     this.Service = api.hap.Service;
     this.Characteristic = api.hap.Characteristic;
 
-    this.log.debug('Finished initializing platform:', this.config.name);
+    this.log.info('Initializing ', this.config.name);
 
     this.api.on('didFinishLaunching', () => {
-      log.debug('Executed didFinishLaunching callback');
-
       this.registerFixedAccessories();
+
+      this.log.info('Config:', JSON.stringify(this.config));
     });
   }
 
