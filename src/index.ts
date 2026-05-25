@@ -1,11 +1,11 @@
 import type { API } from 'homebridge';
 
 import { GateHomebridgePlatform } from './platform.js';
-import { PLATFORM_NAME } from './settings.js';
+import { PLATFORM_NAME, PLUGIN_NAME } from './settings.js';
 
 /**
  * This method registers the platform with Homebridge
  */
 export default (api: API) => {
-  api.registerPlatform(PLATFORM_NAME, GateHomebridgePlatform);
+  api.registerPlatform(PLUGIN_NAME, PLATFORM_NAME, GateHomebridgePlatform);
 };

@@ -3,7 +3,6 @@
   "displayName": "Gate Automation",
   "type": "module",
   "version": "1.0.0",
-  "private": true,
   "description": "A personal Homebridge plugin I've made for automating a gate",
   "author": "mineTomek",
   "license": "Apache-2.0",
