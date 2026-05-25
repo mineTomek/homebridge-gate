@@ -1,5 +1,6 @@
 import { PlatformAccessory } from 'homebridge';
 import { GateHomebridgePlatform } from '../platform.js';
+import { Payload } from '../mqttConfig.js';
 
 export class GateAccessory {
   private service;
@@ -45,10 +46,10 @@ export class GateAccessory {
 
     if (value === Characteristic.TargetDoorState.OPEN) {
       log.info('HomeKit requested gate open');
-      // TODO: publish MQTT command: gate/open or gate/toggle
+      this.platform.mqtt.publishTargetState(Payload.target.open);
     } else {
       log.info('HomeKit requested gate close');
-      // TODO: publish MQTT command: gate/close or gate/toggle
+      this.platform.mqtt.publishTargetState(Payload.target.closed);
     }
 
     this.service.updateCharacteristic(

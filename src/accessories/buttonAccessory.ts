@@ -35,8 +35,8 @@ export class ButtonAccessory {
       return;
     }
 
-    log.info('Gate button pressed');
-    // TODO: publish MQTT command: gate/trigger
+    log.info('HomeKit requested gate stop');
+    this.platform.mqtt.publishStopTrigger();
 
     setTimeout(() => {
       this.service.updateCharacteristic(Characteristic.On, false);

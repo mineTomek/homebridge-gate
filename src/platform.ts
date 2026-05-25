@@ -11,10 +11,13 @@ import type {
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings.js';
 import { GateAccessory } from './accessories/gateAccessory.js';
 import { ButtonAccessory } from './accessories/buttonAccessory.js';
+import { Config } from './config.js';
+import { Mqtt } from './mqtt.js';
 
 export class GateHomebridgePlatform implements DynamicPlatformPlugin {
   public readonly Service: typeof Service;
   public readonly Characteristic: typeof Characteristic;
+  public readonly mqtt: Mqtt;
 
   private readonly accessories: PlatformAccessory[] = [];
 
@@ -27,6 +30,8 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
     this.Characteristic = api.hap.Characteristic;
 
     this.log.info('Initializing ', this.config.name);
+
+    this.mqtt = new Mqtt(this.config as Config, this.log);
 
     this.api.on('didFinishLaunching', () => {
       this.registerFixedAccessories();
