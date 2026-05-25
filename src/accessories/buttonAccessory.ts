@@ -1,8 +1,8 @@
-import { PlatformAccessory } from 'homebridge';
+import { PlatformAccessory, Service } from 'homebridge';
 import { GateHomebridgePlatform } from '../platform.js';
 
 export class ButtonAccessory {
-  private service;
+  private service: Service;
 
   constructor(
     private readonly platform: GateHomebridgePlatform,

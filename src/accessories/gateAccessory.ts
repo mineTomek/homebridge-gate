@@ -1,13 +1,13 @@
-import { PlatformAccessory } from 'homebridge';
+import { PlatformAccessory, Service } from 'homebridge';
 import { GateHomebridgePlatform } from '../platform.js';
 import { Payload } from '../mqttConfig.js';
 
 export class GateAccessory {
-  private service;
+  private service: Service;
 
-  private currentState;
-  private targetState;
-  private obstruction;
+  private currentState: number;
+  private targetState: number;
+  private obstruction: boolean;
 
   constructor(
     private readonly platform: GateHomebridgePlatform,
@@ -116,5 +116,4 @@ export class GateAccessory {
       this.obstruction,
     );
   }
-
 }
