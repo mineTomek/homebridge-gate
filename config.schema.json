@@ -13,9 +13,7 @@
             "mqttPort": {
                 "title": "MQTT Port",
                 "type": "integer",
-                "default": 1883,
-                "minimum": 1,
-                "maximum": 65535
+                "default": 1883
             },
             "mqttUsername": {
                 "title": "MQTT Username",
@@ -23,8 +21,7 @@
             },
             "mqttPassword": {
                 "title": "MQTT Password",
-                "type": "string",
-                "format": "password"
+                "type": "string"
             }
         }
     }
