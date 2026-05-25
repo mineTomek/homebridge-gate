@@ -35,7 +35,7 @@ export class ButtonAccessory {
       return;
     }
 
-    log.info('HomeKit requested gate stop');
+    log.debug('HomeKit requested gate stop');
     this.platform.mqtt.publishStopTrigger();
 
     setTimeout(() => {

@@ -53,14 +53,14 @@ export class Mqtt {
 
     switch (topic) {
     case MqttConfig.topic.sub.state:
-      this.log.info('Received state:', value);
+      this.log.debug('Received state:', value);
 
       if (this.onStateChange) {
         this.onStateChange(value);
       }
       break;
     case MqttConfig.topic.sub.obstruction:
-      this.log.info('Received obstruction:', value);
+      this.log.debug('Received obstruction:', value);
 
       if (this.onObstructionChange) {
         this.onObstructionChange(value);
@@ -68,7 +68,7 @@ export class Mqtt {
       break;
     case MqttConfig.topic.sub.availability:
     {
-      this.log.info('Received availability:', payload.toString());
+      this.log.debug('Received availability:', payload.toString());
 
       const available = payload.toString() === Payload.availability.online;
 

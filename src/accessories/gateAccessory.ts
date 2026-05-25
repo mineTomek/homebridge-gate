@@ -51,10 +51,10 @@ export class GateAccessory {
     this.targetState = value;
 
     if (value === Characteristic.TargetDoorState.OPEN) {
-      log.info('HomeKit requested gate open');
+      log.debug('HomeKit requested gate open');
       this.platform.mqtt.publishTargetState(Payload.target.open);
     } else {
-      log.info('HomeKit requested gate close');
+      log.debug('HomeKit requested gate close');
       this.platform.mqtt.publishTargetState(Payload.target.closed);
     }
 
@@ -67,7 +67,7 @@ export class GateAccessory {
   public updateState(state: number) {
     const { Characteristic, log } = this.platform;
 
-    log.info('Gate state updated from MQTT:', state);
+    log.debug('Gate state updated from MQTT:', state);
 
     switch (state) {
     case Payload.state.open:
@@ -107,7 +107,7 @@ export class GateAccessory {
   public updateObstruction(obstruction: number) {
     const { Characteristic, log } = this.platform;
 
-    log.info('Gate obstruction updated from MQTT:', obstruction);
+    log.debug('Gate obstruction updated from MQTT:', obstruction);
 
     this.obstruction = obstruction === Payload.obstruction.obstructed;
 
