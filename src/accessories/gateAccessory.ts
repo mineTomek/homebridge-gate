@@ -65,10 +65,10 @@ export class GateAccessory {
     this.targetState = value;
 
     if (value === Characteristic.TargetDoorState.OPEN) {
-      log.debug('HomeKit requested gate open');
+      log.debug('Requested gate open');
       this.platform.mqtt.publishTargetState(Payload.target.open);
     } else {
-      log.debug('HomeKit requested gate close');
+      log.debug('Requested gate close');
       this.platform.mqtt.publishTargetState(Payload.target.closed);
     }
 
