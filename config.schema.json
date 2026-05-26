@@ -28,10 +28,10 @@
                 "type": "boolean",
                 "default": false
             },
-            "autoCloseDelayMs": {
-                "title": "Delay (ms)",
+            "autoCloseDelaySeconds": {
+                "title": "Delay (seconds)",
                 "type": "integer",
-                "default": 5000
+                "default": 5
             }
         }
     },
@@ -53,7 +53,7 @@
             "expanded": false,
             "items": [
                 "autoCloseEnabled",
-                "autoCloseDelayMs"
+                "autoCloseDelaySeconds"
             ]
         }
     ]
