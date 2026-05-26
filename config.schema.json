@@ -23,6 +23,7 @@
                 "title": "Password",
                 "type": "string"
             },
+
             "autoCloseEnabled": {
                 "title": "Enabled",
                 "type": "boolean",
@@ -32,6 +33,11 @@
                 "title": "Delay (seconds)",
                 "type": "integer",
                 "default": 5
+            },
+            "autoCloseWhileOpening": {
+                "title": "Allow Auto Close while opening",
+                "type": "boolean",
+                "default": true
             }
         }
     },
@@ -53,7 +59,8 @@
             "expanded": false,
             "items": [
                 "autoCloseEnabled",
-                "autoCloseDelaySeconds"
+                "autoCloseDelaySeconds",
+                "autoCloseWhileOpening"
             ]
         }
     ]

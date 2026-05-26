@@ -8,4 +8,5 @@ export type Config = PlatformConfig & {
 
     autoCloseEnabled: boolean;
     autoCloseDelaySeconds: number;
+    autoCloseWhileOpening: boolean;
 }
