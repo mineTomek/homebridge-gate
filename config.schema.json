@@ -6,33 +6,55 @@
         "type": "object",
         "properties": {
             "mqttHost": {
-                "title": "MQTT Host",
+                "title": "Host",
                 "type": "string",
                 "default": "localhost"
             },
             "mqttPort": {
-                "title": "MQTT Port",
+                "title": "Port",
                 "type": "integer",
                 "default": 1883
             },
             "mqttUsername": {
-                "title": "MQTT Username",
+                "title": "Username",
                 "type": "string"
             },
             "mqttPassword": {
-                "title": "MQTT Password",
+                "title": "Password",
                 "type": "string"
             },
             "autoCloseEnabled": {
-                "title": "Auto Close Enabled",
+                "title": "Enabled",
                 "type": "boolean",
                 "default": false
             },
             "autoCloseDelayMs": {
-                "title": "Auto Close Delay (ms)",
+                "title": "Delay (ms)",
                 "type": "integer",
                 "default": 5000
             }
         }
-    }
+    },
+    "layout": [
+        {
+            "type": "section",
+            "title": "MQTT",
+            "items": [
+                "mqttHost",
+                "mqttPort",
+                "mqttUsername",
+                "mqttPassword"
+            ]
+        },
+        {
+            "type": "section",
+            "title": "Auto Close",
+            "expandable": true,
+            "expanded": false,
+            "items": [
+                "autoCloseEnabled",
+                "autoCloseDelayMs"
+            ]
+        }
+    ]
 }
