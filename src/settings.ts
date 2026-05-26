@@ -6,4 +6,4 @@ export const PLATFORM_NAME = 'GateAutomation';
 /**
  * This must match the name of your plugin as defined the package.json `name` property
  */
-export const PLUGIN_NAME = 'homebridge-gate';
+export const PLUGIN_NAME = '@minetomek/homebridge-gate';
