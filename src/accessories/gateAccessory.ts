@@ -1,6 +1,8 @@
 import { PlatformAccessory, Service } from 'homebridge';
 import { GateHomebridgePlatform } from '../platform.js';
 import { Payload } from '../mqtt/mqttConfig.js';
+import { AutoCloseController } from '../extras/autoClose.js';
+import { Config } from '../config.js';
 
 export class GateAccessory {
   private service: Service;
@@ -8,6 +10,8 @@ export class GateAccessory {
   private currentState: number;
   private targetState: number;
   private obstruction: boolean;
+
+  private autoCloseController: AutoCloseController;
 
   constructor(
     private readonly platform: GateHomebridgePlatform,
@@ -18,6 +22,10 @@ export class GateAccessory {
     this.currentState = Characteristic.CurrentDoorState.CLOSED;
     this.targetState = Characteristic.TargetDoorState.CLOSED;
     this.obstruction = false;
+
+    this.autoCloseController = new AutoCloseController(platform.config as Config, platform.log, () => {
+      this.setTargetState(Characteristic.TargetDoorState.CLOSED);
+    });
 
     this.accessory
       .getService(Service.AccessoryInformation)!
@@ -48,6 +56,12 @@ export class GateAccessory {
   private async setTargetState(value: number) {
     const { Characteristic, log } = this.platform;
 
+    if (value === this.targetState) {
+      return;
+    }
+
+    this.autoCloseController.onTargetStateChanged();
+
     this.targetState = value;
 
     if (value === Characteristic.TargetDoorState.OPEN) {
@@ -64,12 +78,18 @@ export class GateAccessory {
     );
   }
 
-  public updateState(state: number) {
+  public updateState(newState: number) {
     const { Characteristic, log } = this.platform;
 
-    log.debug('Gate state updated from MQTT:', state);
+    log.debug('Gate state updated from MQTT:', newState);
 
-    switch (state) {
+    if (newState === this.currentState) {
+      return;
+    }
+
+    this.autoCloseController.onCurrentStateChanged(newState);
+
+    switch (newState) {
     case Payload.state.open:
       this.currentState = Characteristic.CurrentDoorState.OPEN;
       this.targetState = Characteristic.TargetDoorState.OPEN;
@@ -90,7 +110,7 @@ export class GateAccessory {
       this.currentState = Characteristic.CurrentDoorState.STOPPED;
       break;
     default:
-      log.warn('Unknown gate state from MQTT:', state);
+      log.warn('Unknown gate state from MQTT:', newState);
       return;
     }
 
@@ -104,12 +124,20 @@ export class GateAccessory {
     );
   }
 
-  public updateObstruction(obstruction: number) {
+  public updateObstruction(newObstruction: number) {
     const { Characteristic, log } = this.platform;
 
-    log.debug('Gate obstruction updated from MQTT:', obstruction);
+    log.debug('Gate obstruction updated from MQTT:', newObstruction);
 
-    this.obstruction = obstruction === Payload.obstruction.obstructed;
+    const newObstructionBool = newObstruction === Payload.obstruction.obstructed;
+
+    if (this.obstruction === newObstructionBool) {
+      return;
+    }
+
+    this.autoCloseController.onObstructionChanged(this.obstruction, newObstructionBool);
+
+    this.obstruction = newObstructionBool;
 
     this.service.updateCharacteristic(
       Characteristic.ObstructionDetected,
