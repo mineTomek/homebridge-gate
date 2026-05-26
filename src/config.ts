@@ -5,4 +5,7 @@ export type Config = PlatformConfig & {
     mqttPort: number;
     mqttUsername: string;
     mqttPassword: string;
+
+    autoCloseEnabled: boolean;
+    autoCloseDelayMs: number;
 }
