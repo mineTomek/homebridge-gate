@@ -1,6 +1,6 @@
 import { PlatformAccessory, Service } from 'homebridge';
 import { GateHomebridgePlatform } from '../platform.js';
-import { Payload } from '../mqttConfig.js';
+import { Payload } from '../mqtt/mqttConfig.js';
 
 export class GateAccessory {
   private service: Service;

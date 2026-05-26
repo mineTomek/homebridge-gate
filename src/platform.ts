@@ -12,7 +12,7 @@ import { PLATFORM_NAME, PLUGIN_NAME } from './settings.js';
 import { GateAccessory } from './accessories/gateAccessory.js';
 import { ButtonAccessory } from './accessories/buttonAccessory.js';
 import { Config } from './config.js';
-import { Mqtt } from './mqtt.js';
+import { Mqtt } from './mqtt/mqtt.js';
 
 export class GateHomebridgePlatform implements DynamicPlatformPlugin {
   public readonly Service: typeof Service;

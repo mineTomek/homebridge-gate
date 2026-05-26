@@ -1,5 +1,5 @@
 import mqtt from 'mqtt';
-import { Config } from './config.js';
+import { Config } from '../config.js';
 import { Logging } from 'homebridge';
 import { MqttConfig, Payload } from './mqttConfig.js';
 
