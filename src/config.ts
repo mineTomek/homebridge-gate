@@ -1,6 +1,6 @@
 import { PlatformConfig } from 'homebridge';
 
-export type Config = PlatformConfig & {
+export interface Config extends PlatformConfig {
     mqttHost: string;
     mqttPort: number;
     mqttUsername: string;
