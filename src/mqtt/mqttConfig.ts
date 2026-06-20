@@ -7,11 +7,13 @@ export const MqttConfig = {
       state: 'gate/current',
       obstruction: 'gate/obstruction',
       availability: 'gate/availability',
+      updateStatus: 'gate/update/status',
     },
 
     pub: {
       target: 'gate/target/set',
       stop: 'gate/stop/trigger',
+      updateAvailable: 'gate/update/available',
     },
   } as const,
   payload: {
@@ -40,6 +42,15 @@ export const MqttConfig = {
     availability: {
       offline: 'offline',
       online: 'online',
+    },
+
+    updateStatus: {
+      idle: 0x00,
+      scheduled: 0x01,
+      downloading: 0x02,
+      installing: 0x03,
+      success: 0x04,
+      failed: 0x05,
     },
   } as const,
 };
