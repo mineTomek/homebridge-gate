@@ -89,4 +89,9 @@ export class Mqtt {
   public publishStopTrigger() {
     this.client.publish(MqttConfig.topic.pub.stop, Buffer.from([]), { qos: 1 });
   }
+
+  public publishUpdateAvailable(url: string, sha256: string, size: number) {
+    const payload = [url, sha256, size.toString()].join('\n');
+    this.client.publish(MqttConfig.topic.pub.updateAvailable, payload, { qos: 1 });
+  }
 }
