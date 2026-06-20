@@ -9,4 +9,8 @@ export type Config = PlatformConfig & {
     autoCloseEnabled: boolean;
     autoCloseDelaySeconds: number;
     autoCloseWhileOpening: boolean;
+
+    httpServerPort: number;
+    otaWebhookPath: string;
+    otaWebhookSecret: string;
 }

@@ -38,6 +38,23 @@
                 "title": "Allow Auto Close while opening",
                 "type": "boolean",
                 "default": true
+            },
+
+            "httpServerPort": {
+                "title": "Port",
+                "type": "integer",
+                "default": 8085
+            },
+
+            "otaWebhookPath": {
+                "title": "Webhook Path",
+                "type": "string",
+                "default": "/update/webhook"
+            },
+            "otaWebhookSecret": {
+                "title": "Webhook Secret",
+                "type": "string",
+                "default": ""
             }
         }
     },
@@ -61,6 +78,25 @@
                 "autoCloseEnabled",
                 "autoCloseDelaySeconds",
                 "autoCloseWhileOpening"
+            ]
+        },
+        {
+            "type": "section",
+            "title": "HTTP Server",
+            "expandable": true,
+            "expanded": false,
+            "items": [
+                "httpServerPort"
+            ]
+        },
+        {
+            "type": "section",
+            "title": "OTA Updates",
+            "expandable": true,
+            "expanded": false,
+            "items": [
+                "otaWebhookPath",
+                "otaWebhookSecret"
             ]
         }
     ]
