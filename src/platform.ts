@@ -13,6 +13,7 @@ import { GateAccessory } from './accessories/gateAccessory.js';
 import { ButtonAccessory } from './accessories/buttonAccessory.js';
 import { Config } from './config.js';
 import { Mqtt } from './mqtt/mqtt.js';
+import { WebhookServer } from './ota/webhook.js';
 
 export class GateHomebridgePlatform implements DynamicPlatformPlugin {
   public readonly Service: typeof Service;
@@ -21,6 +22,8 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
 
   private readonly accessories: PlatformAccessory[] = [];
   private gateAccessory: GateAccessory | null = null;
+
+  private otaUpdateWebhook: WebhookServer;
 
   constructor(
     public readonly log: Logging,
@@ -32,9 +35,16 @@ export class GateHomebridgePlatform implements DynamicPlatformPlugin {
 
     this.mqtt = new Mqtt(this.config as Config, this.log);
 
+    this.otaUpdateWebhook = new WebhookServer(
+      this.config as Config,
+      this.log,
+      this.mqtt,
+    );
+
     this.api.on('didFinishLaunching', () => {
       this.registerFixedAccessories();
       this.setupMqttHandlers();
+      this.otaUpdateWebhook.start();
     });
   }
 
