@@ -15,10 +15,14 @@ export const MqttConfig = {
     },
   } as const,
   payload: {
+    // PUB
+
     target: {
       open: 0x00,
       closed: 0x01,
     },
+
+    // SUB
 
     state: {
       open: 0x00,
